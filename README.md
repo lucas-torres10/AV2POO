@@ -23,12 +23,21 @@ Após isso foi possível fazer as alterações necessárias na Classe jogo, fora
 public Jogo(NaveFactory naveFactory, InimigoFactory inimigoFactory) { this.naveFactory = naveFactory; this.inimigoFactory = inimigoFactory; initJogo(); }
 
 “NaveFactory naveFactory” é o primeiro parâmetro do construtor e “InimigoFactory inimigoFactory” é o segundo parâmetro, ambos parâmetros esperam instâncias das suas respectivas classes no momento em que um novo objeto Jogo é criado
-Dentro do “Olho do Furacão”(Construtor): No construtor as instâncias são passadas como argumentos e atribuídas às variáveis dentro da classe Jogo. A utilidade do construtor nessa parte, é que com ele podemos alterar ou alternar entre os diferentes tipos de fábricas ao criarmos diferentes instâncias de naves ou inimigos.
-Posteriormente modificamos o método “updateInimigo()” e agora podemos visualizar uma transição no modo que os inimigos são criados no jogo. Antes dessa modificação os inimigos eram criados utilizando-se o construtor da classe Inimigo.
-Antes: private void updateInimigo() { while (inimigos.size() < 5) { inimigos.add(new Inimigo(B_WIDTH, random.nextInt(B_HEIGHT
+
+Dentro do “Olho do Furacão”(Construtor): 
+No construtor as instâncias são passadas como argumentos e atribuídas às variáveis dentro da classe Jogo. A utilidade do construtor nessa parte, é que com ele podemos alterar ou alternar entre os diferentes tipos de fábricas ao criarmos diferentes instâncias de naves ou inimigos.Posteriormente modificamos o método “updateInimigo()” e agora podemos visualizar uma transição no modo que os inimigos são criados no jogo. Antes dessa modificação os inimigos eram criados utilizando-se o construtor da classe Inimigo.
+
+Antes: 
+
+private void updateInimigo() { while (inimigos.size() < 5) { inimigos.add(new Inimigo(B_WIDTH, random.nextInt(B_HEIGHT
 10)); } }
-Depois: private void updateInimigo() { while (inimigos.size() < 5) { inimigos.add(inimigoFactory.criarInimigo(B_WIDTH, random.nextInt(B_HEIGHT - 20) + 10)); }
+
+Depois: 
+
+private void updateInimigo() { while (inimigos.size() < 5) { inimigos.add(inimigoFactory.criarInimigo(B_WIDTH, random.nextInt(B_HEIGHT - 20) + 10)); }
+
 Outra substituição que fizemos foi a alteração do local onde são criadas as naves, para isso usamos a fábrica “NaveFactory” para criação de uma instância da classe “Nave” no método “initJogo()”. Lembrando que ao fazermos isso definiremos os parâmetros no próprio método. Com o controle da criação de naves sendo feito pela fábrica fica mais fácil criar ou alterar os tipos de nave:
+
 private void initJogo() { addKeyListener(new TAdapter()); setFocusable(true); setBackground(Color.BLACK); setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT)); setDoubleBuffered(true); nave = naveFactory.criarNave(40, 60, B_HEIGHT); timer = new Timer(DELAY, this); timer.start(); }
 
 Por fim alteramos na classe principal o metódo “initInimigo”, foram iniciadas novas fases e inimigos, fizemos isso para adicionar os objetos da fábrica “NaveFactory” e “InimigoFactory”.:
